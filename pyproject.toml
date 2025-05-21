@@ -24,3 +24,9 @@ flake8 = "^6.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.urls]
+"Homepage"       = "https://github.com/Prodigal-AI/prodigal-automation"
+"Repository"     = "https://github.com/Prodigal-AI/prodigal-automation"
+"Documentation"  = "https://prodigal-automation.readthedocs.io"  # if you have docs
+"Bug Tracker"    = "https://github.com/Prodigal-AI/prodigal-automation/issues"
