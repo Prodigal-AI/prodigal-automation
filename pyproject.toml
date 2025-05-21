@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "prodigal-automation"
-version = "0.1.0"
+version = "0.1.1"
 description = "Agentic tools & OAuth/RBAC support for Prodigal Automation"
 authors = ["Your Name <you@company.com>"]
 license = "MIT"
