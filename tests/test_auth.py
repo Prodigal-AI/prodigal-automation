@@ -1,21 +1,25 @@
+# tests/test_auth.py
+
+from prodigal_automation.auth import TwitterAuth
 import pytest
-from fastapi import Request
-from prodigal_automation.auth import require_token, AuthError
 
-class DummyRequest:
-    def __init__(self, headers):
-        self.headers = headers
+def test_bearer_token_validation():
+    # valid token
+    auth = TwitterAuth(bearer_token="validbearertoken123")
+    assert auth.has_bearer_token()
 
-def test_no_token():
-    with pytest.raises(AuthError):
-        require_token(DummyRequest({}))
+    # short token should raise validation error
+    with pytest.raises(ValueError):
+        TwitterAuth(bearer_token="short")
 
-def test_bad_token():
-    with pytest.raises(AuthError):
-        require_token(DummyRequest({"Authorization":"Bearer bad"}))
+def test_oauth_credentials_check():
+    auth = TwitterAuth(
+        api_key="key",
+        api_key_secret="secret",
+        access_token="token",
+        access_token_secret="secret_token"
+    )
+    assert auth.has_oauth_credentials()
 
-def test_good_token():
-    # update expected_token in auth.py for test
-    token = "expected_token"
-    req = DummyRequest({"Authorization":f"Bearer {token}"})
-    assert require_token(req) == token
+    auth = TwitterAuth()
+    assert not auth.has_oauth_credentials()

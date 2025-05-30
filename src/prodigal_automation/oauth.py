@@ -1,41 +1,22 @@
 # src/prodigal_automation/oauth.py
 
-from requests_oauthlib import OAuth2Session
+from tweepy import OAuth1UserHandler
+from .auth import TwitterAuth
 
-class OAuthClient:
-    """
-    A simple OAuth2 “out-of-band” helper.
-    """
-
-    def __init__(
-        self,
-        client_id: str,
-        client_secret: str,
-        authorize_url: str,
-        token_url: str,
-        scope: list[str],
-    ):
-        self._oauth = OAuth2Session(
-            client_id,
-            scope=scope,
-            redirect_uri="urn:ietf:wg:oauth:2.0:oob",
+class TwitterOAuthHandler:
+    """Handles Twitter OAuth 1.0a authentication"""
+    
+    def __init__(self, auth: TwitterAuth):
+        if not auth.has_oauth_credentials():
+            raise ValueError("Missing required OAuth credentials")
+        
+        self.handler = OAuth1UserHandler(
+            consumer_key=auth.api_key,
+            consumer_secret=auth.api_secret,
+            access_token=auth.access_token,
+            access_token_secret=auth.access_token_secret
         )
-        self.client_secret = client_secret
-        self.token_url = token_url
-
-    def get_authorization_url(self) -> tuple[str,str]:
-        """
-        Step 1: redirect user to this URL, have them paste back the code.
-        """
-        url, state = self._oauth.authorization_url(authorize_url)
-        return url, state
-
-    def fetch_token(self, authorization_response: str) -> dict:
-        """
-        Step 2: call this with the URL the user was redirected back to.
-        """
-        return self._oauth.fetch_token(
-            token_url=self.token_url,
-            authorization_response=authorization_response,
-            client_secret=self.client_secret,
-        )
+    
+    def get_auth_handler(self):
+        """Returns the configured OAuth handler"""
+        return self.handler
