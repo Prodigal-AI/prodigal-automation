@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "prodigal-automation"
-version = "0.1.1"
+version = "0.1.2"
 description = "Agentic tools & OAuth/RBAC support for Prodigal Automation"
-authors = ["Your Name <you@company.com>"]
+authors = ["RANGDAL PAVANSAI", "WAGMARE SANJANA", "ANKIT TAYAL"]
 license = "MIT"
 readme = "README.md"
 packages = [{ include = "prodigal_automation", from = "src" }]
@@ -31,5 +31,5 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.urls]
 "Homepage"       = "https://github.com/Prodigal-AI/prodigal-automation"
 "Repository"     = "https://github.com/Prodigal-AI/prodigal-automation"
-"Documentation"  = "https://prodigal-automation.readthedocs.io"  # if you have docs
+"Documentation"  = "https://prodigal-automation.readthedocs.io"
 "Bug Tracker"    = "https://github.com/Prodigal-AI/prodigal-automation/issues"

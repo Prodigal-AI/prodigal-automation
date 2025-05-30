@@ -96,7 +96,7 @@ prodigal-automation/
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/Pavansai20054/prodigal-automation.git
+   git clone https://github.com/Prodigal-AI/prodigal-automation
    cd prodigal-automation
    ```
 
