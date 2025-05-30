@@ -1,46 +1,35 @@
+# src/prodigal_automation/twitter.py
+
+from .auth import TwitterAuth
+from .twitter_manager import TwitterManager
 import os
-import tweepy
-from prodigal_automation.tools import register_tool
 
-# Pull your v2 bearer token from the environment
-BEARER_TOKEN = os.getenv("TWITTER_BEARER_TOKEN")
-if not BEARER_TOKEN:
-    raise RuntimeError("Please set TWITTER_BEARER_TOKEN in your env to a v2 bearer token")
+class TwitterAutomation:
+    def __init__(self):
+        self.gemini_api_key = os.getenv('GEMINI_API_KEY')
+        if not self.gemini_api_key:
+            raise ValueError("GEMINI_API_KEY not set")
 
-# Initialize a global Tweepy client
-_client = tweepy.Client(bearer_token=BEARER_TOKEN, wait_on_rate_limit=True)
+    def get_twitter_credentials(self) -> TwitterAuth:
+        print("Enter Twitter credentials (leave blank to skip)")
+        return TwitterAuth(
+            bearer_token=input("Bearer Token: ").strip() or None,
+            api_key=input("API Key: ").strip() or None,
+            api_key_secret=input("API Secret: ").strip() or None,
+            access_token=input("Access Token: ").strip() or None,
+            access_token_secret=input("Access Token Secret: ").strip() or None
+        )
 
-def get_user_timeline(username: str, max_results: int = 5) -> dict:
-    """
-    Fetch the most recent tweets from a user timeline.
-    Uses Tweepy Client.user_timeline under the hood.
-    """
-    # Look up the user’s ID first
-    user = _client.get_user(username=username)
-    if not user.data:
-        raise RuntimeError(f"User @{username} not found")
-    user_id = user.data.id
-
-    # Now fetch tweets for that user
-    resp = _client.get_users_tweets(
-        id=user_id,
-        max_results=max_results,
-        tweet_fields=["created_at", "text"]
-    )
-    return resp.data or []
-
-def get_tweet(tweet_id: str) -> dict:
-    """
-    Fetch a single tweet by ID.
-    """
-    resp = _client.get_tweet(
-        id=tweet_id,
-        tweet_fields=["created_at", "text"]
-    )
-    if not resp.data:
-        raise RuntimeError(f"Tweet {tweet_id} not found")
-    return resp.data
-
-# Register these functions as “tools”:
-register_tool("twitter_get_user_timeline", get_user_timeline)
-register_tool("twitter_get_tweet", get_tweet)
+    def run(self):
+        try:
+            auth = self.get_twitter_credentials()
+            manager = TwitterManager(auth, self.gemini_api_key)
+            topic = input("Tweet topic: ").strip()
+            # Removed length input as Twitter has a character limit, not word limit
+            result = manager.create_tweet(topic) # Call create_tweet without length
+            if result["success"]:
+                print(f"Tweet posted (ID: {result['tweet_id']}): {result['content']}")
+            else:
+                print(f"Tweet posting failed: {result['error']}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")

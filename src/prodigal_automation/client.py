@@ -1,33 +1,27 @@
 # src/prodigal_automation/client.py
 
-import os
-import requests
-from prodigal_automation.auth import require_token
+from tweepy import Client
+from .auth import TwitterAuth
 
-class ProdigalClient:
-    """
-    A thin client for talking to your orchestrator’s HTTP API.
-    """
-
-    def __init__(self, base_url: str, token: str | None = None):
-        self.base_url = base_url.rstrip("/")
-        self.token = token or os.getenv("PRODIGAL_TOKEN")
-        if not self.token:
-            raise ValueError("PRODIGAL_TOKEN must be set")
-
-    def _headers(self) -> dict[str,str]:
-        return {"Authorization": f"Bearer {self.token}"}
-
-    def enqueue(self, agent_id: str, payload: dict) -> dict:
-        """
-        POST /enqueue
-        """
-        resp = requests.post(
-            f"{self.base_url}/enqueue",
-            json={"agent_id": agent_id, "payload": payload},
-            headers=self._headers(),
-        )
-        resp.raise_for_status()
-        return resp.json()
-
-    # you can add more orchestrator wrappers here…
+class TwitterClient:
+    """Twitter API client wrapper"""
+    
+    def __init__(self, auth: TwitterAuth):
+        self.auth = auth
+        self.client = None
+        
+    def initialize(self):
+        """Initialize the appropriate Twitter client based on available credentials"""
+        if self.auth.has_oauth_credentials():
+            self.client = Client(
+                consumer_key=self.auth.api_key,
+                consumer_secret=self.auth.api_key_secret,
+                access_token=self.auth.access_token,
+                access_token_secret=self.auth.access_token_secret
+            )
+        elif self.auth.has_bearer_token():
+            self.client = Client(bearer_token=self.auth.bearer_token)
+        else:
+            raise ValueError("No valid Twitter credentials provided")
+        
+        return self.client
