@@ -89,6 +89,7 @@ prodigal-automation/
 - **Python:** Version **3.12** (mandatory — create your venv with this version)
 - **Twitter Developer Account:** [Apply here](https://developer.x.com/en/portal/petition/essential/basic-info)
 - **Git:** For cloning the repository
+- **Gemini API** For content generation
 
 ---
 
@@ -123,11 +124,14 @@ prodigal-automation/
 
 4. **Set Up Environment Variables**
 
-   Copy the example `.env` file and edit it with your Twitter API credentials (instructions for getting these are below):
+   Copy the example `.env` file and edit it with your Twitter API credentials (instructions for getting these are below).  
+   **Note:**  
+   In addition to Twitter API keys, you should also add your **Gemini API key** in the `.env.example` file and your actual `.env`. This is required for Gemini-based features.
 
    ```bash
    cp src/prodigal_automation/examples/.env.example src/prodigal_automation/examples/.env
    # Edit src/prodigal_automation/examples/.env with your credentials
+   # Add your Gemini API key as GEMINI_API_KEY=your_gemini_api_key
    ```
 
 ---
