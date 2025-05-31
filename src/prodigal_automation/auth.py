@@ -8,25 +8,13 @@ from pydantic import BaseModel, Field, field_validator
 class TwitterAuth(BaseModel):
     """Twitter authentication credentials model"""
 
-    bearer_token: Optional[str] = Field(
-        None,
-        description="Twitter API Bearer Token"
-        )
+    bearer_token: Optional[str] = Field(None, description="Twitter API Bearer Token")
 
-    api_key: Optional[str] = Field(
-        None,
-        description="Twitter API Key"
-        )
+    api_key: Optional[str] = Field(None, description="Twitter API Key")
 
-    api_key_secret: Optional[str] = Field(
-        None,
-        description="Twitter API Secret"
-        )
+    api_key_secret: Optional[str] = Field(None, description="Twitter API Secret")
 
-    access_token: Optional[str] = Field(
-        None,
-        description="Twitter Access Token"
-        )
+    access_token: Optional[str] = Field(None, description="Twitter Access Token")
 
     access_token_secret: Optional[str] = Field(
         None, description="Twitter Access Token Secret"

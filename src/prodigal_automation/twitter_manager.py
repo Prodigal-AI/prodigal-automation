@@ -28,16 +28,13 @@ class TwitterManager:
             # This is the old constructor signature -
             # twitter_client_or_auth is TwitterAuth,
             raise ValueError(
-                "Missing required parameter:"
-                "content_generator_or_api_key"
+                "Missing required parameter:" "content_generator_or_api_key"
             )
 
         if isinstance(twitter_client_or_auth, TwitterAuth):
             # Production usage: TwitterAuth + gemini_api_key
             self.client = TwitterClient(twitter_client_or_auth).initialize()
-            self.content_generator = ContentGenerator(
-                content_generator_or_api_key
-            )
+            self.content_generator = ContentGenerator(content_generator_or_api_key)
         else:
             # Test usage: mock twitter_client + mock content_generator
             self.client = twitter_client_or_auth

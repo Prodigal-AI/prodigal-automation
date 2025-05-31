@@ -50,9 +50,7 @@ class TestTwitterManager:
     def test_create_tweet_api_error(self):
         # Mock the Twitter API client to raise an exception
         mock_twitter_client = MagicMock()
-        mock_twitter_client.create_tweet.side_effect = Exception(
-            "Twitter API Error"
-        )
+        mock_twitter_client.create_tweet.side_effect = Exception("Twitter API Error")
 
         # Mock the ContentGenerator
         mock_content_generator = MagicMock()
