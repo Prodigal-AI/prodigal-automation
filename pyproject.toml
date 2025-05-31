@@ -33,3 +33,6 @@ build-backend = "poetry.core.masonry.api"
 "Repository"     = "https://github.com/Prodigal-AI/prodigal-automation"
 "Documentation"  = "https://prodigal-automation.readthedocs.io"
 "Bug Tracker"    = "https://github.com/Prodigal-AI/prodigal-automation/issues"
+
+[tool.black]
+line-length = 88
