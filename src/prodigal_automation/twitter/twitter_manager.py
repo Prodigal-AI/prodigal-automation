@@ -14,14 +14,6 @@ class TwitterManager:
             validated_post = SocialMediaPost(**post_data)
             tweet_data = self.client.post(validated_post.content) # client.post handles v2 API call
 
-            # The tweet_data from client.post (tweepy.Client.create_tweet) will be simpler:
-            # {"id": "...", "text": "..."}
-            # We need to ensure our TwitterPostResponse model is compatible.
-            # It's better to fetch full tweet details if needed after posting, but for this,
-            # we'll map directly. created_at is not in the immediate create_tweet response.
-            # If you need created_at and author_id for the post response, you'd need to do a
-            # separate tweet lookup. For now, we'll keep it simple.
-
             return TwitterPostResponse(**tweet_data)
         except ValidationError as e:
             raise ValidationError(f"Invalid post data: {e}")
@@ -38,7 +30,6 @@ class TwitterManager:
             
             # If we wanted to include user details in the Timeline model, we'd need to process
             # response.includes from client.get_home_timeline in TwitterClient.
-            # For now, let's assume the Tweet model is sufficient with its fields.
             
             tweets = []
             for t_data in timeline_response_data:

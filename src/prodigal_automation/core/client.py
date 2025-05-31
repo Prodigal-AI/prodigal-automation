@@ -53,12 +53,6 @@ class TwitterClient(BaseSocialMediaClient):
         try:
             # For home timeline, we need the authenticating user's ID.
             # We can get this from client.get_me() which is typically done once.
-            # For simplicity, we'll assume the user ID is available or fetched once.
-            # In a real app, you'd cache this.
-            # Tweepy's get_home_timeline fetches the authenticated user's timeline.
-            # max_results for get_home_timeline is 1 to 100.
-            # To get more, you'd use Tweepy's Paginator or handle pagination tokens.
-            # For this example, we'll stick to max_results.
 
             # First, get the authenticated user's ID
             me_response = self._client.get_me()

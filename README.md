@@ -1,3 +1,8 @@
+![Python Version](https://img.shields.io/badge/python-3.12+-blue.svg)
+[![License](https://img.shields.io/github/license/Nivesh03/package-twitter.svg)](LICENSE)
+[![Twitter API](https://img.shields.io/badge/Twitter%20API-v2-1DA1F2.svg)](https://developer.twitter.com/en/docs/twitter-api)
+[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 # Prodigal-Automation
 
 A Python project for automating social media interactions, starting with Twitter.
