@@ -1,6 +1,8 @@
 # 🤖✨ Contributing to Twitter Automation Project
 
-Thank you for your interest in contributing to our **Twitter Automation** project! 🚀 We welcome contributions from developers of all skill levels. This comprehensive guide will help you get started and ensure a smooth contribution process.
+Thank you for your interest in contributing to our **Twitter Automation** project! 🚀  
+We welcome contributions from developers of all skill levels.  
+This comprehensive guide will help you get started and ensure a smooth contribution process.
 
 ---
 
@@ -22,14 +24,16 @@ Thank you for your interest in contributing to our **Twitter Automation** projec
     - [⚙️ Environment Configuration](#️-environment-configuration)
   - [📁 Project Structure](#-project-structure)
   - [🔄 Development Workflow](#-development-workflow)
-  - [📝 Coding Standards](#-coding-standards)
-    - [🐍 Python Style Guide](#-python-style-guide)
-    - [🧹 Code Formatting](#-code-formatting)
-    - [✨ Example Code Style](#-example-code-style)
   - [🧪 Testing Guidelines](#-testing-guidelines)
     - [🧬 Test Structure](#-test-structure)
     - [🖊️ Writing Tests](#️-writing-tests)
     - [📈 Test Coverage](#-test-coverage)
+    - [🧪 Testing \& Linting Process](#-testing--linting-process)
+      - [1. **Run Unit and Integration Tests**](#1-run-unit-and-integration-tests)
+      - [2. **Check Code Formatting**](#2-check-code-formatting)
+      - [3. **Lint the Codebase**](#3-lint-the-codebase)
+      - [4. **Check Type Annotations**](#4-check-type-annotations)
+      - [5. **(Optional) Run Example Scripts**](#5-optional-run-example-scripts)
   - [🔄 Pull Request Process](#-pull-request-process)
     - [📝 Before Submitting](#-before-submitting)
     - [🏷️ PR Title Format](#️-pr-title-format)
@@ -58,7 +62,8 @@ Thank you for your interest in contributing to our **Twitter Automation** projec
 
 ## 🤝 Code of Conduct
 
-We are committed to providing a **welcoming and inspiring community** for all. Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md) to ensure a respectful and collaborative environment for everyone.
+We are committed to providing a **welcoming and inspiring community** for all.  
+Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md) to ensure a respectful and collaborative environment for everyone.
 
 ### 🌈 Our Standards
 
@@ -79,11 +84,11 @@ Before you begin, ensure you have the following installed:
 - 🌀 **Git** for version control
 - 📦 **pip** for package management
 - 🐦 A **Twitter Developer Account** (for API access)
-- 🟡 **Gemini API Key** (for AI-powered content generation — [Get yours here](https://aistudio.google.com/app/apikey))
+- 🔑 **Gemini API Key** (for AI-powered content generation — [Get yours here](https://aistudio.google.com/app/apikey))
 
 ### ⚡ Quick Start
 
-1. **Fork the repository** on GitHub
+1. **Fork the repository** on GitHub  
 2. **Clone your fork locally**:
    ```bash
    git clone https://github.com/yourusername/twitter-automation.git
@@ -313,94 +318,6 @@ Before you begin any coding or feature work, **please follow these steps:**
    mypy src/
    ```
 
-6. **Commit Your Changes**
-
-   Use descriptive commit messages following conventional commit format:
-
-   ```bash
-   git add .
-   git commit -m "feat: add automated tweet scheduling functionality 🗓️"
-   ```
-
----
-
-## 📝 Coding Standards
-
-### 🐍 Python Style Guide
-
-We follow [PEP 8](https://www.python.org/dev/peps/pep-0008/) with some modifications:
-
-- 📏 **Line length**: Maximum 88 characters (Black formatter default)
-- 📥 **Imports**: Use absolute imports, group them properly
-- 📝 **Type hints**: Required for all public functions and methods
-- 📚 **Docstrings**: Use Google-style docstrings
-
-### 🧹 Code Formatting
-
-We use automated code formatting tools:
-
-```bash
-# Format code with Black
-black src/ tests/
-
-# Sort imports with isort
-isort src/ tests/
-
-# Check linting with flake8
-flake8 src/ tests/
-```
-
-### ✨ Example Code Style
-
-```python
-from typing import List, Optional
-import logging
-
-from twitter_automation.api import TwitterClient
-from twitter_automation.models import Tweet
-
-logger = logging.getLogger(__name__)
-
-class TweetScheduler:
-    """Handles scheduling and posting of tweets.
-    
-    This class provides functionality to schedule tweets for future posting
-    and manages the automated posting process.
-    
-    Args:
-        client: An authenticated Twitter API client.
-        max_retries: Maximum number of retry attempts for failed requests.
-    """
-    
-    def __init__(self, client: TwitterClient, max_retries: int = 3) -> None:
-        self.client = client
-        self.max_retries = max_retries
-        
-    def schedule_tweet(
-        self, 
-        content: str, 
-        scheduled_time: Optional[datetime] = None
-    ) -> Tweet:
-        """Schedule a tweet for posting.
-        
-        Args:
-            content: The tweet content to post.
-            scheduled_time: When to post the tweet. If None, posts immediately.
-            
-        Returns:
-            The created tweet object.
-            
-        Raises:
-            TwitterAPIError: If the API request fails.
-            ValueError: If content exceeds character limit.
-        """
-        if len(content) > 280:
-            raise ValueError("Tweet content exceeds 280 character limit")
-            
-        logger.info(f"Scheduling tweet for {scheduled_time or 'immediate posting'}")
-        # Implementation here...
-```
-
 ---
 
 ## 🧪 Testing Guidelines
@@ -463,6 +380,42 @@ python -m pytest --cov=twitter_automation --cov-report=html
 # View coverage report
 open htmlcov/index.html
 ```
+
+---
+
+### 🧪 Testing & Linting Process
+
+For consistent and reliable code quality, **every PR must pass the following checks** before merging:
+
+#### 1. **Run Unit and Integration Tests**
+```bash
+python -m pytest
+```
+
+#### 2. **Check Code Formatting**
+```bash
+black --check .
+isort .
+```
+
+#### 3. **Lint the Codebase**
+```bash
+flake8 .
+```
+
+#### 4. **Check Type Annotations**
+```bash
+mypy src/
+```
+
+#### 5. **(Optional) Run Example Scripts**
+You can test end-to-end tweet posting with an example script:
+```bash
+# Make sure your environment variables are set!
+poetry run python src/prodigal_automation/examples/twitter_example.py
+```
+- 📝 This will prompt you for your Twitter credentials (unless set via environment variables).
+- 🐦 Check your Twitter account to see if the tweet was posted.
 
 ---
 
@@ -672,7 +625,9 @@ refactor: simplify authentication flow
 
 ## 🙏 Thank You
 
-Thank you for contributing to the **Twitter Automation** project! Your contributions help make this tool better for everyone. We appreciate your time and effort in improving the project.
+Thank you for contributing to the **Twitter Automation** project!  
+Your contributions help make this tool better for everyone.  
+We appreciate your time and effort in improving the project.
 
 For questions or clarification about this contributing guide, please [open an issue](https://github.com/Prodigal-AI/prodigal-automation/issues/new) or reach out to the maintainers.
 
