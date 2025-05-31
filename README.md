@@ -48,9 +48,28 @@ A Python project for automating social media interactions, starting with Twitter
 
 ## Usage
 
-You can run the CLI commands using `poetry run sma` or, after `poetry install`, `sma`.
+You can run the CLI commands using `poetry run sma` or, after `poetry install --scripts`, just `sma`.
 
-### Post a Tweet
+### Twitter Commands
+
+* **Post a Tweet:**
+    ```bash
+    poetry run sma twitter-post --content "Hello from my automated Twitter bot!"
+    ```
+* **Fetch Timeline:**
+    ```bash
+    poetry run sma twitter-timeline --count 5
+    ```
+
+### Facebook Commands
+
+* **Post to Facebook:**
+    ```bash
+    poetry run sma facebook-post --content "Hello from my automated Facebook bot!"
+    ```
+    * **Note on Facebook:** Ensure your `FACEBOOK_ACCESS_TOKEN` has the necessary permissions (e.g., `publish_to_groups`, `pages_manage_posts`) and your app has been approved by Facebook for these permissions if you are publishing beyond your own test user. If `FACEBOOK_PAGE_ID` is set, it will attempt to post to that page. Otherwise, it defaults to the authenticated user's feed.
+
+## Running Tests
 
 ```bash
-poetry run sma post --content "Hello from my automated Twitter bot using Poetry and Tweepy! #PythonAutomation"
+poetry run pytest tests/

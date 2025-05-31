@@ -18,6 +18,7 @@ tweepy = "^4.15.0"
 typer = "^0.16.0"
 # If you want async:
 # httpx = "^0.24.0"
+facebook-sdk = "^3.1.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2"

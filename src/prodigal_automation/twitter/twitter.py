@@ -1,5 +1,5 @@
 from prodigal_automation.core.auth import DotEnvAuthenticator
-from prodigal_automation.core.client import TwitterClient
+from prodigal_automation.twitter.twitter_client import TwitterClient 
 from prodigal_automation.twitter.twitter_manager import TwitterManager
 from prodigal_automation.core.models import SocialMediaPost, TwitterPostResponse, Timeline
 from prodigal_automation.core.errors import SocialMediaError
