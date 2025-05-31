@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "prodigal-automation"
-version = "0.1.2"
+version = "0.1.3"
 description = "Agentic tools & OAuth/RBAC support for Prodigal Automation"
 authors = ["RANGDAL PAVANSAI", "WAGMARE SANJANA", "ANKIT TAYAL"]
 license = "MIT"

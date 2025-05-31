@@ -3,11 +3,12 @@
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Twitter API](https://img.shields.io/badge/Twitter%20API-v2-1DA1F2.svg)](https://developer.twitter.com/en/docs/twitter-api)
+[![Gemini API](https://img.shields.io/badge/Gemini%20API-available-%23fbbc05.svg)](https://aistudio.google.com/app/apikey)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 > **Primary repository for workflow automation and educational Twitter API integration**
 
-A comprehensive Python-based automation tool designed for educational purposes, enabling users to learn Twitter API integration, data analysis, sentiment tracking, and automated content generation while adhering to platform policies.
+A comprehensive Python-based automation tool designed for educational purposes, enabling users to learn Twitter API integration, data analysis, sentiment tracking, and automated content generation (using Google Gemini API) while adhering to platform policies.
 
 ---
 
@@ -25,6 +26,8 @@ A comprehensive Python-based automation tool designed for educational purposes, 
     - [Step 3: Create Your Twitter App](#step-3-create-your-twitter-app)
     - [Step 4: Configure Authentication](#step-4-configure-authentication)
     - [Step 5: Generate API Keys](#step-5-generate-api-keys)
+  - [🔑 Gemini API Setup](#-gemini-api-setup)
+    - [How to Get a Gemini API Key](#how-to-get-a-gemini-api-key)
   - [🚀 Running Your First Example](#-running-your-first-example)
     - [1. **Navigate to the Example Script**](#1-navigate-to-the-example-script)
     - [2. **Run the Example**](#2-run-the-example)
@@ -41,9 +44,9 @@ A comprehensive Python-based automation tool designed for educational purposes, 
 ## ✨ Features
 
 - 🐦 **Twitter API Integration** – Seamless connection with Twitter API v2
+- 🤖 **Gemini API Integration** – Smart, AI-powered content generation with Google Gemini
 - 📊 **Data Analysis** – Comprehensive tweet data collection and analysis
 - 💭 **Sentiment Analysis** – Real-time sentiment tracking and monitoring
-- 🤖 **Automated Content Generation** – Smart tweet generation within 280-character limit
 - 📈 **Trend Analysis** – Explore trending topics and user interactions
 - 🔧 **Multi-tenant Support** – Handle multiple Twitter accounts
 - 🛡️ **Security First** – Secure token management and authentication
@@ -55,41 +58,42 @@ A comprehensive Python-based automation tool designed for educational purposes, 
 
 ```
 prodigal-automation/
-├── .github/                    # GitHub-specific configuration (CI/CD)
-│   └── workflows/              # GitHub Actions workflows
-│       └── ci.yml
+├── .github/                    # ⚙️ GitHub-specific configuration (CI/CD)
+│   └── workflows/              # 🤖 GitHub Actions workflows
+│       └── ci.yml              # 🧪 CI pipeline definition
 ├── src/
 │   └── prodigal_automation/
-│       ├── examples/           # Example scripts (see below)
-│       │   ├── twitter_example.py        # Single-account Twitter automation
-│       │   └── twitter_multi_tenant.py   # Multi-account setup
-│       ├── tool_modules/       # Modular tool integrations (Twitter, LinkedIn, etc.)
-│       ├── auth.py             # Handles authentication
-│       ├── client.py           # API client interface
-│       ├── oauth.py            # OAuth flow handlers
-│       ├── tools.py            # Content generation and validation
-│       ├── twitter_manager.py  # High-level Twitter logic
-│       └── twitter.py          # Twitter utilities and helpers
-├── tests/                      # Test suite (unit/integration tests)
-├── .gitignore
-├── CHANGELOG.md
-├── CONTRIBUTING.md
-├── LICENSE
-├── pyproject.toml
-├── README.md
-├── requirements.txt
-├── requirements_dev.txt
-└── TESTING.md
+│       ├── examples/           # 💡 Example scripts (see below)
+│       │   ├── twitter_example.py        # 🐦 Single-account Twitter automation
+│       │   └── twitter_multi_tenant.py   # 👥 Multi-account setup
+│       ├── tool_modules/       # 🧩 Modular tool integrations (Twitter, LinkedIn, etc.)
+│       ├── auth.py             # 🔐 Handles authentication
+│       ├── client.py           # 🌐 API client interface
+│       ├── oauth.py            # 🔄 OAuth flow handlers
+│       ├── tools.py            # ✨ Content generation and validation
+│       ├── twitter_manager.py  # 🕹️ High-level Twitter logic
+│       └── twitter.py          # 🛠️ Twitter utilities and helpers
+├── tests/                      # 🧪 Test suite (unit/integration tests)
+├── .gitignore                  # 🚫 Files and folders to ignore in Git
+├── CHANGELOG.md                # 📝 Project changelog/history
+├── CODE_OF_CONDUCT.md          # 🤝 Contributor Code of Conduct
+├── CONTRIBUTORS.md             # 👥 List of project contributors
+├── CONTRIBUTING.md             # 🛤️ Contributing guidelines
+├── LICENSE                     # 📜 Project license (MIT)
+├── pyproject.toml              # ⚙️ Python project metadata/config
+├── README.md                   # 📖 Project overview and instructions
+├── requirements.txt            # 📦 Main dependencies
+├── requirements_dev.txt        # 🧑‍💻 Dev/testing dependencies
+└── TESTING.md                  # 🧪 Testing instructions and details
 ```
 
 ---
-
 ## 🔧 Prerequisites
 
-- **Python:** Version **3.12** (mandatory — create your venv with this version)
-- **Twitter Developer Account:** [Apply here](https://developer.x.com/en/portal/petition/essential/basic-info)
-- **Git:** For cloning the repository
-- **Gemini API** For content generation
+- **Python**: Version **3.12** (mandatory — create your venv with this version)
+- **Git**: For cloning the repository
+- **Twitter Developer Account**: [Apply here](https://developer.x.com/en/portal/petition/essential/basic-info)
+- **Gemini API Key**: For AI-powered content generation (see below)
 
 ---
 
@@ -181,9 +185,44 @@ I plan to use the Twitter API strictly for educational purposes. My goal is to l
 
 ---
 
+## 🔑 Gemini API Setup
+
+**Gemini** is Google's new generative AI platform.  
+You need a valid Gemini API key to enable automated content generation in this project.
+
+### How to Get a Gemini API Key
+
+1. **Go to the Google AI Studio**  
+   [Google AI Studio](https://aistudio.google.com/app/apikey)
+
+2. **Sign in with your Google account**  
+   - Use a personal or educational Google account.
+
+3. **Create a New API Key**
+   - Click on **"Create API Key"**
+   - Assign a name (e.g., "Prodigal Automation")
+   - Click **Create**
+
+4. **Copy Your API Key**
+   - Once generated, click the copy button.
+
+5. **Add Your API Key to the Project**
+   - Open your `.env` file (see Installation Guide above)
+   - Add the key:
+     ```
+     GEMINI_API_KEY=your_gemini_api_key
+     ```
+
+6. **Keep Your Key Secure!**
+   - **Never share or commit your API key** to public repositories.
+
+> 📚 [More info about Gemini API](https://aistudio.google.com/app/apikey)
+
+---
+
 ## 🚀 Running Your First Example
 
-Once you have your Twitter API credentials and have set up your virtual environment with Python 3.12, follow these steps to run the sample script and automate your first tweet generation:
+Once you have your Twitter API credentials, Gemini API key, and have set up your virtual environment with Python 3.12, follow these steps to run the sample script and automate your first tweet generation:
 
 ### 1. **Navigate to the Example Script**
 
@@ -211,7 +250,8 @@ The script will interactively prompt you for the following, in order:
 3. **API Key Secret**
 4. **Access Token**
 5. **Access Token Secret**
-6. **Topic** (for content generation)
+6. **Gemini API Key**
+7. **Topic** (for content generation)
 
 Enter each credential as prompted. For "Topic", enter a subject you'd like to generate a tweet about (e.g., `AI and Machine Learning`).
 
@@ -220,7 +260,7 @@ Enter each credential as prompted. For "Topic", enter a subject you'd like to ge
 ## 💡 Usage Details
 
 - The script will automatically generate tweet content up to Twitter's 280-character limit.
-- The content is optimized for both brevity and quality.
+- The content is optimized for both brevity and quality using the Gemini API.
 - You can modify or extend scripts in `src/prodigal_automation/examples/` for more advanced or multi-account use cases.
 
 ### **Sample Code Usage**
@@ -233,7 +273,8 @@ manager = TwitterManager(
     api_key="your_api_key",
     api_secret="your_api_secret",
     access_token="your_access_token",
-    access_token_secret="your_access_token_secret"
+    access_token_secret="your_access_token_secret",
+    gemini_api_key="your_gemini_api_key"
 )
 
 result = manager.create_tweet(topic="AI and Machine Learning")
@@ -244,13 +285,17 @@ print(result)
 
 ## 🤝 Contributing
 
-We welcome contributions!  
-Please see our [Contributing Guidelines](CONTRIBUTING.md) for:
+We welcome contributions from everyone!  
+If you want to become a contributor, **please make sure to read and follow:**
 
-- Code of Conduct
-- Development setup
-- Pull request process
-- Issue reporting
+- [CONTRIBUTORS.md](CONTRIBUTORS.md):  
+  Meet the people behind this project and see how you can join the list!
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md):  
+  **Strictly follow** our Code of Conduct to maintain a welcoming, respectful, and inclusive community.
+- [CONTRIBUTING.md](CONTRIBUTING.md):  
+  Step-by-step guide for setting up your development environment, submitting PRs, reporting issues, and all collaboration rules.
+
+> **New members must strictly follow the guidelines and steps outlined in `CONTRIBUTING.md` and adhere to our `CODE_OF_CONDUCT.md` at all times.**
 
 ---
 
@@ -261,6 +306,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ---
 
 ## 👥 Contributors
+
+See [CONTRIBUTORS.md](CONTRIBUTORS.md) for the full list, or meet a few of our awesome contributors below!
 
 <table>
   <tr>
@@ -373,7 +420,7 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes and updates.
 
 **⭐ Star this repository if you find it helpful!**
 
-[Report Bug](https://github.com/Pavansai20054/prodigal-automation/issues) • [Request Feature](https://github.com/Pavansai20054/prodigal-automation/issues) • [Documentation](https://github.com/Pavansai20054/prodigal-automation/wiki)
+[Report Bug](https://github.com/Prodigal-AI/prodigal-automation/issues) • [Request Feature](https://github.com/Prodigal-AI/prodigal-automation/issues) • [Documentation](https://github.com/Prodigal-AI/prodigal-automation/wiki)
 
 </div>
 

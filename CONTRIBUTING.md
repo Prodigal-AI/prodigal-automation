@@ -6,13 +6,16 @@ Thank you for your interest in contributing to our **Twitter Automation** projec
 
 ## 📋 Table of Contents
 
-- [�✨ Contributing to Twitter Automation Project](#-contributing-to-twitter-automation-project)
+- [🤖✨ Contributing to Twitter Automation Project](#-contributing-to-twitter-automation-project)
   - [📋 Table of Contents](#-table-of-contents)
   - [🤝 Code of Conduct](#-code-of-conduct)
     - [🌈 Our Standards](#-our-standards)
   - [🚀 Getting Started](#-getting-started)
     - [🧰 Prerequisites](#-prerequisites)
     - [⚡ Quick Start](#-quick-start)
+    - [🌿 Branching and Forking Guide](#-branching-and-forking-guide)
+      - [🍴 Forking the Repository](#-forking-the-repository)
+      - [🌿 Creating and Using the `updates` Branch](#-creating-and-using-the-updates-branch)
   - [🛠️ Development Environment Setup](#️-development-environment-setup)
     - [🧪 Virtual Environment](#-virtual-environment)
     - [📦 Install Dependencies](#-install-dependencies)
@@ -59,10 +62,10 @@ We are committed to providing a **welcoming and inspiring community** for all. P
 
 ### 🌈 Our Standards
 
-- 🫶 **Be respectful**: Treat everyone with respect and kindness
-- 🤗 **Be inclusive**: Welcome newcomers and help them get started
-- 💡 **Be constructive**: Provide helpful feedback and suggestions
-- 🕰️ **Be patient**: Remember that we all have different experience levels
+- 🫶 **Be respectful**: Treat everyone with respect and kindness  
+- 🤗 **Be inclusive**: Welcome newcomers and help them get started  
+- 💡 **Be constructive**: Provide helpful feedback and suggestions  
+- 🕰️ **Be patient**: Remember that we all have different experience levels  
 
 ---
 
@@ -76,6 +79,7 @@ Before you begin, ensure you have the following installed:
 - 🌀 **Git** for version control
 - 📦 **pip** for package management
 - 🐦 A **Twitter Developer Account** (for API access)
+- 🟡 **Gemini API Key** (for AI-powered content generation — [Get yours here](https://aistudio.google.com/app/apikey))
 
 ### ⚡ Quick Start
 
@@ -87,8 +91,77 @@ Before you begin, ensure you have the following installed:
    ```
 3. **Add the upstream repository**:
    ```bash
-   git remote add upstream https://github.com/originalowner/twitter-automation.git
+   git remote add upstream https://github.com/Prodigal-AI/prodigal-automation.git
    ```
+
+---
+
+### 🌿 Branching and Forking Guide
+
+Proper branching and forking practices help us keep the project organized, review changes efficiently, and maintain a high-quality codebase. Here’s how you can contribute **the right way**:
+
+#### 🍴 Forking the Repository
+
+- Go to the GitHub page of this project.
+- Click the **Fork** button (top right) to create your own copy of the repository.
+- Work will be done on your fork, and then changes proposed to the main repo via a Pull Request (PR).
+
+#### 🌿 Creating and Using the `updates` Branch
+
+> **🚨 Important:**  
+> **All new features, bug fixes, or updates MUST be submitted to the `updates` branch, NOT directly to `main`.**
+>
+> This helps us test and review changes before merging them into the production code.
+
+**Why?**
+- `main` branch = stable release  
+- `updates` branch = new work in progress
+
+**How to do this:**
+
+1. **Sync your fork with the main repository:**
+   ```bash
+   git fetch upstream
+   git checkout main
+   git merge upstream/main
+   ```
+
+2. **Check out the `updates` branch (create it if it doesn’t exist):**
+   ```bash
+   # If you don’t have 'updates' locally, create and track it:
+   git checkout -b updates upstream/updates
+   # Or, if you already have it:
+   git checkout updates
+   git pull upstream updates
+   ```
+
+3. **Create your own feature branch off `updates`:**
+   ```bash
+   git checkout updates
+   git pull
+   git checkout -b feature/your-feature-name
+   # or for bug fixes
+   git checkout -b fix/issue-number-description
+   ```
+
+4. **Make your changes on your feature branch.**
+
+5. **Push your changes to your fork:**
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+6. **Open a Pull Request:**
+   - **Base branch:** `updates` (not `main`!)
+   - **Compare branch:** `feature/your-feature-name` from your fork
+
+**🔔 Summary Table**
+
+| Purpose              | Branch      |
+|----------------------|-------------|
+| Stable Release       | `main`      |
+| New Updates/Features | `updates`   |
+| Your Work            | `feature/your-feature-name` or `fix/issue-description` (branched from `updates`) |
 
 ---
 
@@ -118,8 +191,8 @@ which python  # Should point to your venv directory
 # Install production dependencies
 pip install -r requirements.txt
 
-# Install development dependencies
-pip install -r requirements-dev.txt
+# Install development dependencies (MANDATORY for contributors)
+pip install -r requirements_dev.txt
 
 # Or install in development mode
 pip install -e .
@@ -139,6 +212,9 @@ pip install -e .
    TWITTER_ACCESS_TOKEN=your_access_token_here
    TWITTER_ACCESS_TOKEN_SECRET=your_access_token_secret_here
 
+   # Gemini API Key (required for content generation)
+   GEMINI_API_KEY=your_gemini_api_key_here
+
    # Application Settings
    DEBUG=True
    LOG_LEVEL=INFO
@@ -153,52 +229,73 @@ pip install -e .
 ## 📁 Project Structure
 
 ```
-twitter-automation/
+prodigal-automation/
+├── .github/                    # ⚙️ GitHub-specific configuration (CI/CD)
+│   └── workflows/              # 🤖 GitHub Actions workflows
+│       └── ci.yml              # 🧪 CI pipeline definition
 ├── src/
-│   └── twitter_automation/
-│       ├── __init__.py
-│       ├── api/              # 🐦 Twitter API integration
-│       ├── automation/       # 🤖 Automation logic
-│       ├── utils/            # 🛠️ Utility functions
-│       └── config/           # ⚙️ Configuration management
-├── tests/
-│   ├── unit/                 # 🧪 Unit tests
-│   ├── integration/          # 🔗 Integration tests
-│   └── fixtures/             # 🧩 Test fixtures
-├── docs/                     # 📚 Documentation
-├── scripts/                  # 📝 Utility scripts
-├── requirements.txt          # 📦 Production dependencies
-├── requirements-dev.txt      # 🧑‍💻 Development dependencies
-├── pyproject.toml            # 🏗️ Project metadata
-├── .env.example              # 🌱 Environment template
-└── README.md                 # 🏠 Project overview
+│   └── prodigal_automation/
+│       ├── examples/           # 💡 Example scripts (see below)
+│       │   ├── twitter_example.py        # 🐦 Single-account Twitter automation
+│       │   └── twitter_multi_tenant.py   # 👥 Multi-account setup
+│       ├── tool_modules/       # 🧩 Modular tool integrations (Twitter, LinkedIn, etc.)
+│       ├── auth.py             # 🔐 Handles authentication
+│       ├── client.py           # 🌐 API client interface
+│       ├── oauth.py            # 🔄 OAuth flow handlers
+│       ├── tools.py            # ✨ Content generation and validation
+│       ├── twitter_manager.py  # 🕹️ High-level Twitter logic
+│       └── twitter.py          # 🛠️ Twitter utilities and helpers
+├── tests/                      # 🧪 Test suite (unit/integration tests)
+├── .gitignore                  # 🚫 Files and folders to ignore in Git
+├── CHANGELOG.md                # 📝 Project changelog/history
+├── CODE_OF_CONDUCT.md          # 🤝 Contributor Code of Conduct
+├── CONTRIBUTORS.md             # 👥 List of project contributors
+├── CONTRIBUTING.md             # 🛤️ Contributing guidelines
+├── LICENSE                     # 📜 Project license (MIT)
+├── pyproject.toml              # ⚙️ Python project metadata/config
+├── README.md                   # 📖 Project overview and instructions
+├── requirements.txt            # 📦 Main dependencies
+├── requirements_dev.txt        # 🧑‍💻 Dev/testing dependencies
+└── TESTING.md                  # 🧪 Testing instructions and details
 ```
 
 ---
 
 ## 🔄 Development Workflow
 
-1. **Create a Feature Branch**
+Before you begin any coding or feature work, **please follow these steps:**
+
+1. **Check the CHANGELOG.md**  
+   - Review recent updates and ongoing work to avoid duplicating existing or in-progress features/bugfixes.
+
+2. **Install development dependencies**
+   - Development and testing modules are required for contributions.  
+   - Run:
+     ```bash
+     pip install -r requirements_dev.txt
+     ```
+
+3. **Create a Feature Branch**
 
    ```bash
    # Sync with upstream
    git fetch upstream
-   git checkout main
-   git merge upstream/main
+   git checkout updates
+   git merge upstream/updates
 
-   # Create a new branch
+   # Create a new branch from updates
    git checkout -b feature/your-feature-name
    # or
    git checkout -b fix/issue-number-description
    ```
 
-2. **Make Your Changes**
+4. **Make Your Changes**
    - Write clean, readable code following our [coding standards](#-coding-standards)
    - Add tests for new functionality
    - Update documentation as needed
    - Follow the [conventional commit](#-commit-message-format) format
 
-3. **Test Your Changes**
+5. **Test Your Changes**
 
    ```bash
    # Run all tests
@@ -216,7 +313,7 @@ twitter-automation/
    mypy src/
    ```
 
-4. **Commit Your Changes**
+6. **Commit Your Changes**
 
    Use descriptive commit messages following conventional commit format:
 
@@ -468,7 +565,7 @@ api_key = 'your_actual_api_key_here'
 
 ### 🕵️ Reporting Security Issues
 
-Please report security vulnerabilities **privately** to [security@example.com](mailto:security@example.com) rather than opening public issues.
+Please report security vulnerabilities **privately** to [info@prodigalai.com](mailto:info@prodigalai.com) rather than opening public issues.
 
 ---
 
@@ -577,6 +674,6 @@ refactor: simplify authentication flow
 
 Thank you for contributing to the **Twitter Automation** project! Your contributions help make this tool better for everyone. We appreciate your time and effort in improving the project.
 
-For questions or clarification about this contributing guide, please [open an issue](https://github.com/yourorg/twitter-automation/issues/new) or reach out to the maintainers.
+For questions or clarification about this contributing guide, please [open an issue](https://github.com/Prodigal-AI/prodigal-automation/issues/new) or reach out to the maintainers.
 
 **Happy coding!** 🚀🐦
