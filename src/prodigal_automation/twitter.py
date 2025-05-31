@@ -19,9 +19,7 @@ class TwitterAutomation:
             api_key=input("API Key: ").strip() or None,
             api_key_secret=input("API Secret: ").strip() or None,
             access_token=input("Access Token: ").strip() or None,
-            access_token_secret=(
-                input("Access Token Secret: ").strip() or None
-            ),
+            access_token_secret=(input("Access Token Secret: ").strip() or None),
         )
 
     def run(self):
@@ -32,12 +30,9 @@ class TwitterAutomation:
             result = manager.create_tweet(topic)
             if result["success"]:
                 print(
-                    f"Tweet posted (ID: {result['tweet_id']}): "
-                    f"{result['content']}"
+                    f"Tweet posted (ID: {result['tweet_id']}): " f"{result['content']}"
                 )
             else:
-                print(
-                    f"Tweet posting failed: {result['error']}"
-                )
+                print(f"Tweet posting failed: {result['error']}")
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
