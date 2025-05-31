@@ -1,9 +1,11 @@
 # src/prodigal_automation/examples/twitter-multi-tenant.py
 
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 import os
+
 from prodigal_automation.tools.manager import call_tool
 from prodigal_automation.twitter_manager import register_twitter_credentials
+
 
 def main():
     # 1) Register this tenant’s credentials up front
@@ -32,6 +34,7 @@ def main():
         token=jwt,
     )
     print("LinkedIn profile:", profile)
+
 
 if __name__ == "__main__":
     main()

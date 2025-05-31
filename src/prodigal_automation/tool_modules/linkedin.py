@@ -1,14 +1,17 @@
 # src/prodigal_automation/tools/linkedin.py
 
 import os
+
 from linkedin_v2 import linkedin
-from prodigal_automation.auth import check_token, TokenData
+
+from prodigal_automation.auth import TokenData, check_token
 from prodigal_automation.tools.manager import register_tool
 
 # your app credentials—usually per‐tenant too
-_LINKEDIN_KEY    = os.getenv("LINKEDIN_CLIENT_ID")
+_LINKEDIN_KEY = os.getenv("LINKEDIN_CLIENT_ID")
 _LINKEDIN_SECRET = os.getenv("LINKEDIN_CLIENT_SECRET")
 _LINKEDIN_REDIRECT = os.getenv("LINKEDIN_REDIRECT_URI")
+
 
 def linkedin_get_profile(
     tenant_id: str,
@@ -30,6 +33,7 @@ def linkedin_get_profile(
     profile = app.get_profile(member_urn)
     return profile
 
+
 def linkedin_share_post(
     tenant_id: str,
     author_urn: str,
@@ -45,5 +49,6 @@ def linkedin_share_post(
     share = app.submit_share(author=author_urn, comment=text)
     return share
 
-register_tool("linkedin.get_profile",    linkedin_get_profile)
-register_tool("linkedin.share_post",     linkedin_share_post)
+
+register_tool("linkedin.get_profile", linkedin_get_profile)
+register_tool("linkedin.share_post", linkedin_share_post)
