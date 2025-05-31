@@ -8,15 +8,32 @@ from pydantic import BaseModel, Field, field_validator
 class TwitterAuth(BaseModel):
     """Twitter authentication credentials model"""
 
-    bearer_token: Optional[str] = Field(None, description="Twitter API Bearer Token")
-    api_key: Optional[str] = Field(None, description="Twitter API Key")
-    api_key_secret: Optional[str] = Field(None, description="Twitter API Secret")
-    access_token: Optional[str] = Field(None, description="Twitter Access Token")
+    bearer_token: Optional[str] = Field(
+        None,
+        description="Twitter API Bearer Token"
+        )
+
+    api_key: Optional[str] = Field(
+        None,
+        description="Twitter API Key"
+        )
+
+    api_key_secret: Optional[str] = Field(
+        None,
+        description="Twitter API Secret"
+        )
+
+    access_token: Optional[str] = Field(
+        None,
+        description="Twitter Access Token"
+        )
+
     access_token_secret: Optional[str] = Field(
         None, description="Twitter Access Token Secret"
     )
 
-    @field_validator("bearer_token", mode="before")  # Updated to Pydantic V2 syntax
+    # Updated to Pydantic V2 syntax
+    @field_validator("bearer_token", mode="before")
     @classmethod
     def validate_bearer_token(cls, v):
         if v and len(v) < 10:

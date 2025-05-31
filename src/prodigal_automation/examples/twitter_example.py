@@ -22,7 +22,10 @@ try:
     from prodigal_automation.twitter import TwitterAutomation
 except ImportError as e:
     print(f"Error: {e}")
-    print("Try running with: " "python -m prodigal_automation.examples.twitter_example")
+    print(
+        "Try running with: "
+        "python -m prodigal_automation.examples.twitter_example"
+        )
     sys.exit(1)
 
 

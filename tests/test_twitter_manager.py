@@ -22,7 +22,10 @@ class TestTwitterManager:
         )
 
         # Instantiate TwitterManager with the mocked dependencies
-        twitter_manager = TwitterManager(mock_twitter_client, mock_content_generator)
+        twitter_manager = TwitterManager(
+            mock_twitter_client,
+            mock_content_generator,
+        )
 
         # Define test input
         test_topic = "Test Topic"
@@ -47,7 +50,9 @@ class TestTwitterManager:
     def test_create_tweet_api_error(self):
         # Mock the Twitter API client to raise an exception
         mock_twitter_client = MagicMock()
-        mock_twitter_client.create_tweet.side_effect = Exception("Twitter API Error")
+        mock_twitter_client.create_tweet.side_effect = Exception(
+            "Twitter API Error"
+        )
 
         # Mock the ContentGenerator
         mock_content_generator = MagicMock()
@@ -56,7 +61,10 @@ class TestTwitterManager:
         )
 
         # Instantiate TwitterManager with the mocked dependencies
-        twitter_manager = TwitterManager(mock_twitter_client, mock_content_generator)
+        twitter_manager = TwitterManager(
+            mock_twitter_client,
+            mock_content_generator,
+        )
 
         # Test that the exception is properly handled or raised
         with pytest.raises(Exception, match="Twitter API Error"):
