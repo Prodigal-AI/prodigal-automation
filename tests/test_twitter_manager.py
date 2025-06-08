@@ -1,8 +1,9 @@
-# tests/test_twitter_manager.py
+from unittest.mock import MagicMock
 
 import pytest
-from unittest.mock import MagicMock
+
 from src.prodigal_automation.twitter_manager import TwitterManager
+
 
 class TestTwitterManager:
     def test_create_tweet_success(self):
@@ -16,10 +17,15 @@ class TestTwitterManager:
         # Mock the ContentGenerator and its method
         mock_content_generator = MagicMock()
         # Mock the correct method name that TwitterManager actually calls
-        mock_content_generator.generate_simple_content.return_value = "Mock tweet content"
+        mock_content_generator.generate_simple_content.return_value = (
+            "Mock tweet content"
+        )
 
         # Instantiate TwitterManager with the mocked dependencies
-        twitter_manager = TwitterManager(mock_twitter_client, mock_content_generator)
+        twitter_manager = TwitterManager(
+            mock_twitter_client,
+            mock_content_generator,
+        )
 
         # Define test input
         test_topic = "Test Topic"
@@ -29,10 +35,14 @@ class TestTwitterManager:
 
         # Assertions
         # Check if the correct method was called with the correct argument
-        mock_content_generator.generate_simple_content.assert_called_once_with(test_topic)
+        mock_content_generator.generate_simple_content.assert_called_once_with(
+            test_topic
+        )
 
         # Check if create_tweet was called with the generated content
-        mock_twitter_client.create_tweet.assert_called_once_with(text="Mock tweet content")
+        mock_twitter_client.create_tweet.assert_called_once_with(
+            text="Mock tweet content"
+        )
 
         # Check if the returned tweet_id is correct
         assert tweet_id == mock_tweet_response.id
@@ -41,14 +51,19 @@ class TestTwitterManager:
         # Mock the Twitter API client to raise an exception
         mock_twitter_client = MagicMock()
         mock_twitter_client.create_tweet.side_effect = Exception("Twitter API Error")
-        
+
         # Mock the ContentGenerator
         mock_content_generator = MagicMock()
-        mock_content_generator.generate_simple_content.return_value = "Mock tweet content"
-        
+        mock_content_generator.generate_simple_content.return_value = (
+            "Mock tweet content"
+        )
+
         # Instantiate TwitterManager with the mocked dependencies
-        twitter_manager = TwitterManager(mock_twitter_client, mock_content_generator)
-        
+        twitter_manager = TwitterManager(
+            mock_twitter_client,
+            mock_content_generator,
+        )
+
         # Test that the exception is properly handled or raised
         with pytest.raises(Exception, match="Twitter API Error"):
             twitter_manager.create_tweet("Test Topic")

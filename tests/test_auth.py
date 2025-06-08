@@ -1,7 +1,9 @@
 # tests/test_auth.py
 
-from prodigal_automation.auth import TwitterAuth
 import pytest
+
+from prodigal_automation.auth import TwitterAuth
+
 
 def test_bearer_token_validation():
     # valid token
@@ -12,12 +14,13 @@ def test_bearer_token_validation():
     with pytest.raises(ValueError):
         TwitterAuth(bearer_token="short")
 
+
 def test_oauth_credentials_check():
     auth = TwitterAuth(
         api_key="key",
         api_key_secret="secret",
         access_token="token",
-        access_token_secret="secret_token"
+        access_token_secret="secret_token",
     )
     assert auth.has_oauth_credentials()
 

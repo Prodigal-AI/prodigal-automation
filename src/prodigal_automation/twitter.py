@@ -1,12 +1,14 @@
 # src/prodigal_automation/twitter.py
 
+import os
+
 from .auth import TwitterAuth
 from .twitter_manager import TwitterManager
-import os
+
 
 class TwitterAutomation:
     def __init__(self):
-        self.gemini_api_key = os.getenv('GEMINI_API_KEY')
+        self.gemini_api_key = os.getenv("GEMINI_API_KEY")
         if not self.gemini_api_key:
             raise ValueError("GEMINI_API_KEY not set")
 
@@ -17,7 +19,7 @@ class TwitterAutomation:
             api_key=input("API Key: ").strip() or None,
             api_key_secret=input("API Secret: ").strip() or None,
             access_token=input("Access Token: ").strip() or None,
-            access_token_secret=input("Access Token Secret: ").strip() or None
+            access_token_secret=(input("Access Token Secret: ").strip() or None),
         )
 
     def run(self):
@@ -25,10 +27,11 @@ class TwitterAutomation:
             auth = self.get_twitter_credentials()
             manager = TwitterManager(auth, self.gemini_api_key)
             topic = input("Tweet topic: ").strip()
-            # Removed length input as Twitter has a character limit, not word limit
-            result = manager.create_tweet(topic) # Call create_tweet without length
+            result = manager.create_tweet(topic)
             if result["success"]:
-                print(f"Tweet posted (ID: {result['tweet_id']}): {result['content']}")
+                print(
+                    f"Tweet posted (ID: {result['tweet_id']}): " f"{result['content']}"
+                )
             else:
                 print(f"Tweet posting failed: {result['error']}")
         except Exception as e:

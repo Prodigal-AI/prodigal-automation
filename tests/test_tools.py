@@ -1,7 +1,9 @@
 # tests/test_tools.py
 
-from prodigal_automation.tools import ContentRequest, ContentGenerator
 import pytest
+
+from prodigal_automation.tools import ContentGenerator, ContentRequest
+
 
 def test_content_request_validation():
     # Valid topic with 2 words
@@ -11,6 +13,7 @@ def test_content_request_validation():
     # Topic with less than 2 words should raise error
     with pytest.raises(ValueError):
         ContentRequest(topic="AI")
+
 
 def test_generate_tweet(monkeypatch):
     # Mock the generative model's generate_content method

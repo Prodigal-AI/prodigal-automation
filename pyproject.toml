@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "prodigal-automation"
-version = "0.1.1"
+version = "0.1.4"
 description = "Agentic tools & OAuth/RBAC support for Prodigal Automation"
-authors = ["Your Name <you@company.com>"]
+authors = ["RANGDAL PAVANSAI", "WAGMARE SANJANA", "ANKIT TAYAL"]
 license = "MIT"
 readme = "README.md"
 packages = [{ include = "prodigal_automation", from = "src" }]
@@ -17,12 +17,13 @@ python-dotenv = "^1.1"
 tweepy = "^4.15.0"
 # If you want async:
 # httpx = "^0.24.0"
+google-generativeai = "^0.8.5"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^7.2"
-black = "^24.0"
-isort = "^6.0"
-flake8 = "^6.0"
+black = "24.3.0"
+isort = "5.13.2"
+flake8 = "7.0.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -31,5 +32,8 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.urls]
 "Homepage"       = "https://github.com/Prodigal-AI/prodigal-automation"
 "Repository"     = "https://github.com/Prodigal-AI/prodigal-automation"
-"Documentation"  = "https://prodigal-automation.readthedocs.io"  # if you have docs
+"Documentation"  = "https://prodigal-automation.readthedocs.io"
 "Bug Tracker"    = "https://github.com/Prodigal-AI/prodigal-automation/issues"
+
+[tool.black]
+line-length = 88
