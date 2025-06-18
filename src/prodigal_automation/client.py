@@ -1,8 +1,9 @@
 # src/prodigal_automation/client.py
 
+
 from tweepy import Client
 
-from .auth import TwitterAuth
+from .auth import FacebookAuth, TwitterAuth
 
 
 class TwitterClient:
@@ -30,3 +31,26 @@ class TwitterClient:
             raise ValueError("No valid Twitter credentials provided")
 
         return self.client
+
+
+# New: Facebook API client wrapper
+class FacebookClient:
+    """Facebook API client wrapper"""
+    
+    def __init__(self, auth: FacebookAuth):
+        self.auth = auth
+        self.client = None
+
+    def initialize(self):
+        """
+        Initialize the Facebook Graph API client using the access token.
+        """
+        import facebook
+        if not self.auth.access_token:
+            raise ValueError("Facebook Access Token not provided.")
+
+        try:
+            self.client = facebook.GraphAPI(access_token=self.auth.access_token)
+            return self.client
+        except facebook.GraphAPIError as e:
+            raise ConnectionError(f"Failed to initialize Facebook client: {e}")

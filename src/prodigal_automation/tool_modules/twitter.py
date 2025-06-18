@@ -1,7 +1,7 @@
-# src/prodigal_automation/tools/twitter.py
+# src/prodigal_automation/tool_modules/twitter.py
 
 from prodigal_automation.auth import TokenData, check_token
-from prodigal_automation.tools.manager import register_tool
+from prodigal_automation.tool_modules.manager import register_tool
 from prodigal_automation.twitter_manager import get_client_for
 
 
