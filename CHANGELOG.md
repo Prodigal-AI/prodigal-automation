@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
-
+## [1.4.0] - 2025-06-20
+### Added
+- ✨ Added Facebook automation and scheduling features
+- 📝 Added new tests
+- ✨ Added documentation for the new feature
+- 🔄 Updated CHANGELOG.md
+- 
 ## [1.3.0] - 2025-05-31
 ### Added
 - ✨ Added documentation for the new feature

@@ -3,12 +3,13 @@
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Twitter API](https://img.shields.io/badge/Twitter%20API-v2-1DA1F2.svg)](https://developer.twitter.com/en/docs/twitter-api)
+[![Facebook Graph API](https://img.shields.io/badge/Facebook%20Graph%20API-v19.0-blue.svg)](https://developers.facebook.com/docs/graph-api/)
 [![Gemini API](https://img.shields.io/badge/Gemini%20API-available-%23fbbc05.svg)](https://aistudio.google.com/app/apikey)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-> **Primary repository for workflow automation and educational Twitter API integration**
+> **Primary repository for workflow automation and educational Twitter & Facebook API integration**
 
-A comprehensive Python-based automation tool designed for educational purposes, enabling users to learn Twitter API integration, data analysis, sentiment tracking, and automated content generation (using Google Gemini API) while adhering to platform policies.
+A comprehensive Python-based automation tool designed for educational purposes, enabling users to learn Twitter and Facebook API integration, data analysis, sentiment tracking, and automated content generation (using Google Gemini API) while adhering to platform policies.
 
 ---
 
@@ -26,14 +27,31 @@ A comprehensive Python-based automation tool designed for educational purposes, 
     - [Step 3: Create Your Twitter App](#step-3-create-your-twitter-app)
     - [Step 4: Configure Authentication](#step-4-configure-authentication)
     - [Step 5: Generate API Keys](#step-5-generate-api-keys)
+  - [📘 Facebook Graph API Setup](#-facebook-graph-api-setup)
+    - [Step 1: Create a Facebook Developer Account](#step-1-create-a-facebook-developer-account)
+    - [Step 2: Create a Facebook App](#step-2-create-a-facebook-app)
+    - [Step 3: Get a Page Access Token and Page ID](#step-3-get-a-page-access-token-and-page-id)
+    - [Add Products](#add-products)
+    - [Use Graph API Explorer](#use-graph-api-explorer)
+    - [Store these:](#store-these)
+  - [Required Permissions](#required-permissions)
+    - [For posting content (text, image, video):](#for-posting-content-text-image-video)
+    - [For fetching insights:](#for-fetching-insights)
   - [🔑 Gemini API Setup](#-gemini-api-setup)
     - [How to Get a Gemini API Key](#how-to-get-a-gemini-api-key)
-  - [🚀 Running Your First Example](#-running-your-first-example)
-    - [1. **Navigate to the Example Script**](#1-navigate-to-the-example-script)
-    - [2. **Run the Example**](#2-run-the-example)
-    - [3. **Enter Your Credentials at the Prompt**](#3-enter-your-credentials-at-the-prompt)
+- [🚀 Running Your First Example](#-running-your-first-example)
+  - [1. Navigate to the Example Script](#1-navigate-to-the-example-script)
+  - [2. Run the Example](#2-run-the-example)
+  - [3. Enter Your Credentials at the Prompt](#3-enter-your-credentials-at-the-prompt)
+    - [For `twitter_example.py`:](#for-twitter_examplepy)
+    - [For `facebook_example.py`:](#for-facebook_examplepy)
   - [💡 Usage Details](#-usage-details)
-    - [**Sample Code Usage**](#sample-code-usage)
+  - [📄 Sample Code Usage (Twitter)](#-sample-code-usage-twitter)
+  - [📄 Sample Code Usage (Facebook)](#-sample-code-usage-facebook)
+  - [🧪 Running Tests](#-running-tests)
+    - [Navigate to the project root directory:](#navigate-to-the-project-root-directory)
+    - [Ensure development dependencies are installed:](#ensure-development-dependencies-are-installed)
+    - [Run all tests:](#run-all-tests)
   - [🤝 Contributing](#-contributing)
   - [📄 License](#-license)
   - [👥 Contributors](#-contributors)
@@ -44,47 +62,53 @@ A comprehensive Python-based automation tool designed for educational purposes, 
 ## ✨ Features
 
 - 🐦 **Twitter API Integration** – Seamless connection with Twitter API v2
+- 📘 **Facebook Graph API Integration** – Post text, images, videos, and retrieve insights
 - 🤖 **Gemini API Integration** – Smart, AI-powered content generation with Google Gemini
-- 📊 **Data Analysis** – Comprehensive tweet data collection and analysis
+- 📊 **Data Analysis** – Comprehensive tweet/post data collection and analysis
 - 💭 **Sentiment Analysis** – Real-time sentiment tracking and monitoring
 - 📈 **Trend Analysis** – Explore trending topics and user interactions
-- 🔧 **Multi-tenant Support** – Handle multiple Twitter accounts
+- 📅 **Post Scheduling** – Schedule content for future publication on Facebook
+- 🔧 **Multi-tenant Support** – Handle multiple social media accounts
 - 🛡️ **Security First** – Secure token management and authentication
 - 📚 **Educational Focus** – Designed for learning and skill development
 
 ---
 
 ## 📁 Project Structure
-
-```
+```bash
 prodigal-automation/
-├── .github/                    # ⚙️ GitHub-specific configuration (CI/CD)
-│   └── workflows/              # 🤖 GitHub Actions workflows
-│       └── ci.yml              # 🧪 CI pipeline definition
+├── .github/              # ⚙️ GitHub-specific configuration (CI/CD)
+│   └── workflows/        # 🤖 GitHub Actions workflows
+│       └── ci.yml        # 🧪 CI pipeline definition
 ├── src/
 │   └── prodigal_automation/
-│       ├── examples/           # 💡 Example scripts (see below)
+│       ├── examples/     # 💡 Example scripts (see below)
 │       │   ├── twitter_example.py        # 🐦 Single-account Twitter automation
-│       │   └── twitter_multi_tenant.py   # 👥 Multi-account setup
-│       ├── tool_modules/       # 🧩 Modular tool integrations (Twitter, LinkedIn, etc.)
-│       ├── auth.py             # 🔐 Handles authentication
-│       ├── client.py           # 🌐 API client interface
-│       ├── oauth.py            # 🔄 OAuth flow handlers
-│       ├── tools.py            # ✨ Content generation and validation
-│       ├── twitter_manager.py  # 🕹️ High-level Twitter logic
-│       └── twitter.py          # 🛠️ Twitter utilities and helpers
-├── tests/                      # 🧪 Test suite (unit/integration tests)
-├── .gitignore                  # 🚫 Files and folders to ignore in Git
-├── CHANGELOG.md                # 📝 Project changelog/history
-├── CODE_OF_CONDUCT.md          # 🤝 Contributor Code of Conduct
-├── CONTRIBUTORS.md             # 👥 List of project contributors
-├── CONTRIBUTING.md             # 🛤️ Contributing guidelines
-├── LICENSE                     # 📜 Project license (MIT)
-├── pyproject.toml              # ⚙️ Python project metadata/config
-├── README.md                   # 📖 Project overview and instructions
-├── requirements.txt            # 📦 Main dependencies
-├── requirements_dev.txt        # 🧑‍💻 Dev/testing dependencies
-└── TESTING.md                  # 🧪 Testing instructions and details
+│       │   ├── twitter_multi_tenant.py   # 👥 Multi-account setup
+│       │   └── facebook_example.py       # 📘 Facebook automation examples
+│       ├── tool_modules/ # 🧩 Modular tool integrations (Twitter, LinkedIn, etc.)
+│       ├── auth.py       # 🔐 Handles authentication
+│       ├── client.py     # 🌐 API client interface for Twitter & Facebook
+│       ├── facebook.py   # 📘 High-level Facebook automation logic
+│       ├── facebook_manager.py # 🕹️ Facebook API interactions and content management
+│       ├── oauth.py      # 🔄 OAuth flow handlers
+│       ├── tools.py      # ✨ Content generation and validation
+│       ├── twitter_manager.py # 🕹️ High-level Twitter logic
+│       └── twitter.py    # 🛠️ Twitter utilities and helpers
+├── tests/                # 🧪 Test suite (unit/integration tests)
+│   ├── test_client.py    # Tests for client.py (including FacebookClient)
+│   └── test_facebook_manager.py # Tests for facebook_manager.py
+├── .gitignore            # 🚫 Files and folders to ignore in Git
+├── CHANGELOG.md          # 📝 Project changelog/history
+├── https://www.google.com/search?q=CODE_OF_CONDUCT.md    # 🤝 Contributor Code of Conduct
+├── CONTRIBUTORS.md       # 👥 List of project contributors
+├── https://www.google.com/search?q=CONTRIBUTING.md       # 🛤️ Contributing guidelines
+├── https://www.google.com/search?q=LICENSE               # 📜 Project license (MIT)
+├── pyproject.toml        # ⚙️ Python project metadata/config
+├── README.md             # 📖 Project overview and instructions
+├── requirements.txt      # 📦 Main dependencies
+├── requirements_dev.txt  # 🧑‍💻 Dev/testing dependencies
+└── TESTING.md            # 🧪 Testing instructions and details
 ```
 
 ---
@@ -93,6 +117,7 @@ prodigal-automation/
 - **Python**: Version **3.12** (mandatory — create your venv with this version)
 - **Git**: For cloning the repository
 - **Twitter Developer Account**: [Apply here](https://developer.x.com/en/portal/petition/essential/basic-info)
+- **Facebook Developer Account**: [Apply here](https://developers.facebook.com/)
 - **Gemini API Key**: For AI-powered content generation (see below)
 
 ---
@@ -184,6 +209,80 @@ I plan to use the Twitter API strictly for educational purposes. My goal is to l
 > You’ll need them for the next step.
 
 ---
+## 📘 Facebook Graph API Setup
+
+To enable Facebook automation, you'll need a Facebook Developer account, a Facebook App, and a Page Access Token with sufficient permissions for the Facebook Page you want to manage.
+
+---
+
+### Step 1: Create a Facebook Developer Account
+
+- Go to the [Facebook for Developers Portal](https://developers.facebook.com/)
+- If you don't have one, click **"Get Started"** to create a new developer account.
+- You'll need to verify your account.
+
+---
+
+### Step 2: Create a Facebook App
+
+- In the Facebook for Developers dashboard, click **"Create App"**.
+- Choose the app type (e.g., **"Business"** or **"None"** if you're just experimenting for learning).
+- Provide an App Name (e.g., _"Prodigal Automation App"_).
+- Click **"Create App"**.
+
+---
+
+### Step 3: Get a Page Access Token and Page ID
+
+This is the most critical part for posting to a Page.
+
+### Add Products
+
+- From your App Dashboard, under **"Add a Product"**, find **"Marketing API"** or **"Graph API"** and click **"Set Up"**.
+- For simpler posting, you might not need the full Marketing API. Setting up a **"Basic Display"** or **"Business"** app and navigating to the **Graph API Explorer** is a common path.
+
+### Use Graph API Explorer
+
+1. Go to [Graph API Explorer](https://developers.facebook.com/tools/explorer/).
+2. Select your newly created app from the **Application** dropdown.
+3. Click **"Get Token"** → **"Get User Access Token"**.
+4. Select the required permissions (see **Required Permissions** below). This gives you a **User Access Token**.
+5. With the User Access Token selected, click **"Get Token"** again → **"Get Page Access Token"**.
+6. Select the Facebook Page you manage and wish to post to. This will generate a **Page Access Token**.
+
+**Important:**  
+- Copy this **Page Access Token** — it’s usually long-lived.
+- While in the Graph API Explorer, you can also find your **Facebook Page ID**:
+  - Select the Page Access Token.
+  - In the dropdown for objects, select your page name.
+  - The ID will appear in the URL or response.
+
+### Store these:
+
+```env
+FACEBOOK_ACCESS_TOKEN=your_page_access_token
+FACEBOOK_PAGE_ID=your_page_id
+```
+
+---
+
+## Required Permissions
+
+### For posting content (text, image, video):
+
+- `pages_show_list`
+- `pages_read_engagement`
+- `pages_manage_posts`
+- `pages_manage_ads` *(sometimes needed for advanced scenarios)*
+
+### For fetching insights:
+
+- `read_insights`
+- `pages_read_engagement`
+
+> You need to select these permissions when generating your **User Access Token** in the **Graph API Explorer**, before exchanging it for a **Page Access Token**.
+>
+> ⚠️ Some permissions may require **App Review** for production use, but for development and learning, they’re typically accessible.
 
 ## 🔑 Gemini API Setup
 
@@ -217,64 +316,90 @@ You need a valid Gemini API key to enable automated content generation in this p
    - **Never share or commit your API key** to public repositories.
 
 > 📚 [More info about Gemini API](https://aistudio.google.com/app/apikey)
+> 
+---
+# 🚀 Running Your First Example
+
+Once you have your Twitter API credentials, Facebook API credentials, Gemini API key, and have set up your virtual environment with Python 3.12, follow these steps to run the sample script and automate content generation:
 
 ---
 
-## 🚀 Running Your First Example
+## 1. Navigate to the Example Script
 
-Once you have your Twitter API credentials, Gemini API key, and have set up your virtual environment with Python 3.12, follow these steps to run the sample script and automate your first tweet generation:
+- Go to: `src/prodigal_automation/examples/`
+- Right-click on `twitter_example.py` or `facebook_example.py` and select **"Open in Integrated Terminal"** in your code editor (e.g., VS Code).
 
-### 1. **Navigate to the Example Script**
+> **Note:**  
+> You are running `*_example.py` — not `*.py` (e.g., `twitter.py` or `facebook.py`).
 
-- Go to:  
-  `src/prodigal_automation/examples/`
-- **Right-click** on `twitter_example.py` and select **"Open in Integrated Terminal"** in your code editor (e.g., VS Code).
+---
 
-  > **Note:**  
-  > You are running `twitter_example.py` — **not** `twitter.py`.
-
-### 2. **Run the Example**
+## 2. Run the Example
 
 From the integrated terminal, run:
 
 ```bash
 python twitter_example.py
+# or for Facebook:
+python facebook_example.py
 ```
 
-### 3. **Enter Your Credentials at the Prompt**
+---
 
-The script will interactively prompt you for the following, in order:
+## 3. Enter Your Credentials at the Prompt
 
-1. **Bearer Token**
-2. **API Key**
-3. **API Key Secret**
-4. **Access Token**
-5. **Access Token Secret**
-6. **Gemini API Key**
-7. **Topic** (for content generation)
+The script will interactively prompt you for the necessary credentials.  
+For **"Topic"**, enter a subject you'd like to generate content about (e.g., _AI and Machine Learning_).
 
-Enter each credential as prompted. For "Topic", enter a subject you'd like to generate a tweet about (e.g., `AI and Machine Learning`).
+### For `twitter_example.py`:
+
+- Bearer Token  
+- API Key  
+- API Key Secret  
+- Access Token  
+- Access Token Secret  
+- Gemini API Key  
+- Topic (for content generation)  
+
+### For `facebook_example.py`:
+
+- Gemini API Key  
+- Facebook Page Access Token  
+- Facebook Page ID  
+- Facebook App ID (optional)  
+- Facebook App Secret (optional)  
+- Facebook post topic (for content generation)  
+
+Prompts for image/video URLs, scheduling, insights, or deletion are based on the script's interactive flow.
 
 ---
 
 ## 💡 Usage Details
 
-- The script will automatically generate tweet content up to Twitter's 280-character limit.
+- The scripts will automatically generate content up to platform-specific limits (e.g., Twitter's 280-character limit).
 - The content is optimized for both brevity and quality using the Gemini API.
-- You can modify or extend scripts in `src/prodigal_automation/examples/` for more advanced or multi-account use cases.
+- You can modify or extend scripts in `src/prodigal_automation/examples/` for more advanced or multi-account use cases, including posting images/videos, scheduling posts, and retrieving insights on Facebook.
 
-### **Sample Code Usage**
+---
+
+## 📄 Sample Code Usage (Twitter)
 
 ```python
-from twitter_manager import TwitterManager
+from prodigal_automation.twitter_manager import TwitterManager
+import os
+
+# It's recommended to load credentials from environment variables or a .env file
+# For example, using python-dotenv:
+# from dotenv import load_dotenv
+# load_dotenv()
 
 manager = TwitterManager(
-    bearer_token="your_bearer_token",
-    api_key="your_api_key",
-    api_secret="your_api_secret",
-    access_token="your_access_token",
-    access_token_secret="your_access_token_secret",
-    gemini_api_key="your_gemini_api_key"
+    bearer_token=os.getenv("TWITTER_BEARER_TOKEN"),
+    api_key=os.getenv("TWITTER_API_KEY"),
+    api_secret=os.getenv("TWITTER_API_SECRET"),
+    access_token=os.getenv("TWITTER_ACCESS_TOKEN"),
+    access_token_secret=os.getenv("TWITTER_ACCESS_TOKEN_SECRET"),
+    gemini_api_key=os.getenv("GEMINI_API_KEY")
 )
 
 result = manager.create_tweet(topic="AI and Machine Learning")
@@ -283,6 +408,77 @@ print(result)
 
 ---
 
+## 📄 Sample Code Usage (Facebook)
+
+```python
+from prodigal_automation.facebook import FacebookAutomation
+import os
+
+# It's recommended to load credentials from environment variables or a .env file
+# For example, using python-dotenv:
+# from dotenv import load_dotenv
+# load_dotenv()
+
+# FacebookAutomation can initialize directly from environment variables
+# if they are set (FACEBOOK_ACCESS_TOKEN, FACEBOOK_PAGE_ID, GEMINI_API_KEY)
+fb_automation = FacebookAutomation()
+
+# Example: Create a text post
+post_result = fb_automation.facebook_manager.create_post(topic="Sustainable AI practices")
+print(f"Text Post Result: {post_result}")
+
+# Example: Post an image (requires an image URL)
+image_url = "https://picsum.photos/1200/630"  # Replace with a real image URL
+image_post_result = fb_automation.facebook_manager.post_image(
+    message="Check out this beautiful image!",
+    image_url=image_url
+)
+print(f"Image Post Result: {image_post_result}")
+
+# Example: Schedule a post for 1 hour from now
+import time
+scheduled_time = int(time.time()) + 3600  # 1 hour from now
+scheduled_post_result = fb_automation.facebook_manager.create_post(
+    topic="The future of renewable energy",
+    scheduled_publish_time=scheduled_time
+)
+print(f"Scheduled Post Result: {scheduled_post_result}")
+
+# Example: Get Page Insights (requires read_insights permission)
+insights_result = fb_automation.facebook_manager.get_page_metrics(
+    metrics=['page_impressions_unique', 'page_post_engagements'],
+    period='week'
+)
+print(f"Page Insights: {insights_result}")
+```
+
+---
+
+## 🧪 Running Tests
+
+To ensure the stability and correctness of the project, especially after making changes, it's highly recommended to run the test suite.
+
+### Navigate to the project root directory:
+
+```bash
+cd prodigal-automation
+```
+
+### Ensure development dependencies are installed:
+
+```bash
+pip install -r requirements_dev.txt
+```
+
+### Run all tests:
+
+```bash
+python -m unittest discover tests
+```
+
+> This command will discover and run all test files (e.g., `test_client.py`, `test_facebook_manager.py`) within the `tests/` directory.  
+> You will see output indicating the number of tests run and whether they passed or failed.
+---
 ## 🤝 Contributing
 
 We welcome contributions from everyone!  

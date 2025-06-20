@@ -5,7 +5,7 @@ import os
 from linkedin_v2 import linkedin
 
 from prodigal_automation.auth import TokenData, check_token
-from prodigal_automation.tools.manager import register_tool
+from prodigal_automation.tool_modules.manager import register_tool
 
 # your app credentials—usually per‐tenant too
 _LINKEDIN_KEY = os.getenv("LINKEDIN_CLIENT_ID")

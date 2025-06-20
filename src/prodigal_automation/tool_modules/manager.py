@@ -1,4 +1,4 @@
-# src/prodigal_automation/tools/manager.py
+# src/prodigal_automation/tool_modules/manager.py
 
 from typing import Any, Callable, Dict
 
