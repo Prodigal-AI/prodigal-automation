@@ -1,6 +1,7 @@
 # src/prodigal_automation/facebook_manager.py
 
-from typing import Dict, Union
+import datetime
+from typing import Dict, Optional, Union
 
 # REMOVE this top-level import: import facebook
 from prodigal_automation.client import FacebookClient
@@ -52,18 +53,16 @@ class FacebookManager:
             self.page_id = facebook_client_or_auth.page_id if facebook_client_or_auth.page_id else None
 
 
-    def create_post(self, topic: str) -> Union[Dict, str]:
+    def create_post(self, topic: str, scheduled_publish_time: Optional[int] = None) -> Union[Dict, str]:
         """
-        Create and post content to Facebook with validation
+        Create and post content to Facebook with validation.
         Args:
-            topic: Topic for the Facebook post
+            topic: Topic for the Facebook post.
+            scheduled_publish_time: Optional UNIX timestamp for scheduling.
+                                    If provided, the post will be scheduled, not published immediately.
         Returns:
-            Dictionary with success status and response data (production)
-            or post_id string (test compatibility)
+            Dictionary with success status and response data.
         """
-        # ... (rest of your code, which already calls self.client methods)
-        # The 'facebook' import is now implicitly handled by FacebookClient,
-        # so no direct import is needed here.
 
         try:
             content = self.content_generator.generate_simple_content(topic)
@@ -75,12 +74,16 @@ class FacebookManager:
                 else:
                     raise ValueError("Facebook Page ID is required to post.")
 
+            params = {'message': content}
+            if scheduled_publish_time:
+                params['published'] = False
+                params['scheduled_publish_time'] = scheduled_publish_time
+                # Facebook requires scheduled time to be between 10 minutes and 30 days from now
+                print(f"Scheduling post for: {datetime.datetime.fromtimestamp(scheduled_publish_time)}")
 
             response = self.client.put_object(
-                parent_object=self.page_id, connection_name='feed', message=content
+                parent_object=self.page_id, connection_name='feed', **params
             )
-
-            # ... (rest of your error handling and return logic)
             if hasattr(response, "get") and response.get("id"):
                 return response.get("id")
 
@@ -124,7 +127,7 @@ class FacebookManager:
                         f"{type(e).__name__} - {str(e)}"
                     ),
                 }
-    def post_image(self, message: str, image_url: str, published: bool = True) -> Dict:
+    def post_image(self, message: str, image_url: str, published: bool = True, scheduled_publish_time: Optional[int] = None) -> Dict:
         """
         Posts an image to the Facebook page.
         Args:
@@ -142,8 +145,13 @@ class FacebookManager:
                 'url': image_url,
                 'message': message,
                 'published': published,
-                'access_token': self.client.auth.access_token # Ensure access token is passed for specific calls
+                'access_token': self.client.auth.access_token
             }
+            if scheduled_publish_time:
+                params['published'] = False
+                params['scheduled_publish_time'] = scheduled_publish_time
+                print(f"Scheduling image post for: {datetime.datetime.fromtimestamp(scheduled_publish_time)}")
+
             response = self.client.put_object(
                 parent_object=self.page_id,
                 connection_name='photos',
@@ -159,7 +167,7 @@ class FacebookManager:
                 return {"success": False, "error": f"Facebook API error (Image Post): {str(e)}"}
             return {"success": False, "error": f"An unexpected error occurred during image post: {str(e)}"}
 
-    def post_video(self, message: str, video_url: str, published: bool = True) -> Dict:
+    def post_video(self, message: str, video_url: str, published: bool = True, scheduled_publish_time: Optional[int] = None) -> Dict:
         """
         Posts a video to the Facebook page.
         Args:
@@ -174,11 +182,16 @@ class FacebookManager:
 
         try:
             params = {
-                'file_url': video_url, # Use 'file_url' for external video URLs
-                'description': message, # Use 'description' for video caption
+                'file_url': video_url,
+                'description': message,
                 'published': published,
-                'access_token': self.client.auth.access_token # Ensure access token is passed
+                'access_token': self.client.auth.access_token
             }
+            if scheduled_publish_time:
+                params['published'] = False
+                params['scheduled_publish_time'] = scheduled_publish_time
+                print(f"Scheduling video post for: {datetime.datetime.fromtimestamp(scheduled_publish_time)}")
+
             response = self.client.put_object(
                 parent_object=self.page_id,
                 connection_name='videos',
@@ -193,3 +206,21 @@ class FacebookManager:
             if isinstance(e, facebook.GraphAPIError):
                 return {"success": False, "error": f"Facebook API error (Video Post): {str(e)}"}
             return {"success": False, "error": f"An unexpected error occurred during video post: {str(e)}"}
+
+    def get_page_metrics(self, metrics: list[str], period: str = 'day', since: Optional[int] = None, until: Optional[int] = None) -> Dict:
+        if not self.page_id:
+            return {"success": False, "error": "Facebook Page ID is not set."}
+        return self.client.get_page_insights(self.page_id, metrics, period, since, until)
+
+    def get_post_metrics(self, post_id: str, metrics: list[str]) -> Dict:
+        return self.client.get_post_insights(post_id, metrics)
+    
+    def delete_post(self, post_id: str) -> Dict:
+        """
+        Deletes a Facebook post.
+        Args:
+            post_id: The ID of the post to delete.
+        Returns:
+            Dictionary indicating success or error.
+        """
+        return self.client.delete_object(post_id)
