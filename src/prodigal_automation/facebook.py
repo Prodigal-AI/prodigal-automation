@@ -16,7 +16,10 @@ class FacebookAutomation:
         print("Enter Facebook credentials (leave blank to skip)")
         return FacebookAuth(
             access_token=input("Facebook Page Access Token: ").strip() or None,
-            page_id=input("Facebook Page ID (optional, but needed for posting): ").strip() or None,
+            page_id=input(
+                "Facebook Page ID (optional, but needed for posting): "
+            ).strip()
+            or None,
             app_id=input("Facebook App ID (optional): ").strip() or None,
             app_secret=input("Facebook App Secret (optional): ").strip() or None,
         )
