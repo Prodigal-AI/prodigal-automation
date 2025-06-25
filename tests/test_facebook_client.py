@@ -1,17 +1,11 @@
 import os
 import sys
-
-# Create a dummy mock for the 'facebook' module if it's not installed
-# This is useful if GraphAPIError is directly referenced for type checking or catching
 from unittest.mock import Mock
 
-# This import is usually only needed if you specifically catch facebook.GraphAPIError
 import facebook
 import pytest
 
 from prodigal_automation.auth import FacebookAuth
-
-# Import the actual classes we want to test
 from prodigal_automation.client import FacebookClient
 
 # Add the src directory to the Python path

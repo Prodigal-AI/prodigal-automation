@@ -2,12 +2,8 @@
 
 from typing import Any, Dict, Optional
 
-from prodigal_automation.auth import (  # Ensure FacebookAuth is imported
-    FacebookAuth,
-    TokenData,
-    check_token,
-)
-from prodigal_automation.client import FacebookClient  # Imports from client
+from prodigal_automation.auth import FacebookAuth, TokenData, check_token
+from prodigal_automation.client import FacebookClient
 from prodigal_automation.tool_modules.manager import register_tool
 
 _FACEBOOK_CLIENTS: Dict[str, FacebookClient] = {}
