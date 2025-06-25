@@ -1,8 +1,7 @@
 # src/prodigal_automation/client.py
-
-
 from typing import Dict, Optional
 
+import facebook
 from tweepy import Client
 
 from .auth import FacebookAuth, TwitterAuth
@@ -46,7 +45,6 @@ class FacebookClient:
         """
         Initialize the Facebook Graph API client using the access token.
         """
-        import facebook
 
         if not self.auth.access_token:
             raise ValueError("Facebook Access Token not provided.")
@@ -57,6 +55,34 @@ class FacebookClient:
             return self.client
         except facebook.GraphAPIError as e:
             raise ConnectionError(f"Failed to initialize Facebook client: {e}")
+
+    def _check_initialized(self):
+        """Helper to ensure client is initialized before making API calls."""
+        if self.client is None:
+            raise RuntimeError(
+                "FacebookClient is not initialized. Call .initialize() first."
+            )
+
+    def put_object(self, parent_object: str, connection_name: str, **kwargs) -> Dict:
+        """
+        Wrapper for facebook.GraphAPI.put_object().
+        Used for creating posts, photos, videos, etc.
+        """
+        self._check_initialized()  # Ensure client is ready
+        try:
+            # IMPORTANT: Call put_object on the self.client (GraphAPI instance)
+            # Ensure access_token is passed if not already handled by GraphAPI's init
+            # The python-facebook-sdk usually uses the token provided at GraphAPI init,
+            # but sometimes explicit passing helps or is required by newer API versions.
+            if "access_token" not in kwargs:
+                kwargs["access_token"] = self.auth.access_token
+            return self.client.put_object(parent_object, connection_name, **kwargs)
+        except facebook.GraphAPIError as e:
+            print(f"Facebook Graph API Error putting object: {e}")
+            return {"error": str(e)}
+        except Exception as e:
+            print(f"An unexpected error occurred putting object: {e}")
+            return {"error": str(e)}
 
     def get_page_insights(
         self,
@@ -77,7 +103,6 @@ class FacebookClient:
         Returns:
             Dictionary containing the insight data.
         """
-        import facebook
 
         if self.client is None:
             raise RuntimeError(
@@ -113,7 +138,6 @@ class FacebookClient:
         Returns:
             Dictionary containing the insight data.
         """
-        import facebook
 
         if self.client is None:
             raise RuntimeError(
@@ -139,7 +163,6 @@ class FacebookClient:
         Returns:
             Dictionary indicating success or error.
         """
-        import facebook
 
         if self.client is None:
             raise RuntimeError(

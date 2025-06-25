@@ -473,7 +473,7 @@ pip install -r requirements_dev.txt
 ### Run all tests:
 
 ```bash
-python -m unittest discover tests
+poetry run pytest
 ```
 
 > This command will discover and run all test files (e.g., `test_client.py`, `test_facebook_manager.py`) within the `tests/` directory.  

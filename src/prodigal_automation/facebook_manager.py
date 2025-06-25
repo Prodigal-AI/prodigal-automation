@@ -3,7 +3,6 @@
 import datetime
 from typing import Dict, Optional, Union
 
-from prodigal_automation.auth import FacebookAuth  # noqa
 from prodigal_automation.client import FacebookClient
 from prodigal_automation.tools import ContentGenerator
 
