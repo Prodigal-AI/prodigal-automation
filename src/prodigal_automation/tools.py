@@ -10,10 +10,15 @@ class ContentRequest(BaseModel):
     """Pydantic model for content generation request"""
 
     topic: str = Field(
-        ..., min_length=2, max_length=200, description="Topic of the content" # Increased max_length
+        ...,
+        min_length=2,
+        max_length=200,
+        description="Topic of the content",  # Increased max_length
     )
     # Changed default length and upper bound for more general use
-    length: int = Field(500, ge=50, le=5000, description="Maximum content length in characters")
+    length: int = Field(
+        500, ge=50, le=5000, description="Maximum content length in characters"
+    )
     style: Optional[str] = Field(
         "professional", description="Writing style (casual/professional/funny)"
     )
@@ -86,7 +91,7 @@ class ContentGenerator:
             Generated post content
         """
         # For Facebook, a higher character limit is acceptable
-        request.length = min(request.length, 5000) # Facebook posts can be much longer
+        request.length = min(request.length, 5000)  # Facebook posts can be much longer
         prompt = (
             f"Write a {request.style} social media post about {request.topic} "
             f"with max {request.length} characters. "
@@ -99,7 +104,6 @@ class ContentGenerator:
             return response.text
         except Exception as e:
             raise ValueError(f"Social media post content generation failed: {str(e)}")
-
 
     # Alternative simple interface
     def simple_generate(self, topic: str, length: int = 500) -> str:

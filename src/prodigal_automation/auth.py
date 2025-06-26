@@ -77,5 +77,7 @@ def check_token(token: Optional[str]) -> TokenData:
     if token:
         # In a real application, you'd decode and validate the JWT here
         # For simplicity, we grant all permissions if a token is provided.
-        return TokenData(user_id="test_user", capabilities=["twitter.read", "facebook.post"])
+        return TokenData(
+            user_id="test_user", capabilities=["twitter.read", "facebook.post"]
+        )
     raise PermissionError("Authentication token is missing or invalid")
